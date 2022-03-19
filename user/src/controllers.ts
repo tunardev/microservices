@@ -152,7 +152,16 @@ export const accountEditAvatar = async (req: Request, res: Response) => {
   const extansion = path.extname(file.name);
   const fileName = `${uuidv4()}${extansion}`;
 
-  const folderPath = path.join(__dirname, "..", "..", "cdn", "images", "avatars", req.user._id, fileName);
+  const folderPath = path.join(
+    __dirname,
+    "..",
+    "..",
+    "cdn",
+    "images",
+    "avatars",
+    req.user._id,
+    fileName
+  );
 
   file.mv(folderPath, async (err: Error) => {
     if (err) {
@@ -163,6 +172,6 @@ export const accountEditAvatar = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .json({ data: { ...req.body, avatar: fileName }, code: 200 });
+      .json({ message: "Avatar uploaded.", file: fileName });
   });
-}
+};
