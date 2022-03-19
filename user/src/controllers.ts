@@ -17,6 +17,7 @@ export const register = async (req: Request, res: Response) => {
     username,
     email,
     password: hashedPassword,
+    avatar: "hello.png",
     createdAt: new Date(),
   });
 
@@ -159,8 +160,7 @@ export const accountEditAvatar = async (req: Request, res: Response) => {
     "cdn",
     "images",
     "avatars",
-    req.user._id,
-    fileName
+    `${req.user._id.toString()}-${fileName}`
   );
 
   file.mv(folderPath, async (err: Error) => {
@@ -168,7 +168,7 @@ export const accountEditAvatar = async (req: Request, res: Response) => {
       return res.status(500).json({ message: err.message });
     }
 
-    await database.updateOne(req.user._id, { avatar: fileName });
+    await database.updateOne(req.user._id, { $set: { avatar: fileName } });
 
     return res
       .status(200)

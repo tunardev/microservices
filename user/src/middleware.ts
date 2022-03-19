@@ -19,12 +19,13 @@ export const isAuth = async (req: Request, res: Response, next: NextFunction) =>
     });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET as string, async (error: any, data: any) => {
+  jwt.verify(bearer[1], process.env.JWT_SECRET as string, async (error: any, data: any) => {
       if (error) {
         return res.status(401).json({
           message: "Invalid token.",
         });
       }
+
 
       const user = await database.findById(data.id);
       if (!user) {

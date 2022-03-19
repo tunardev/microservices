@@ -1,10 +1,11 @@
-import { MongoClient, Document } from "mongodb";
+import { MongoClient, Document, ObjectId } from "mongodb";
 import { createClient } from "redis";
 
 export interface User extends Document {
   username: string;
   email: string;
   password: string;
+  avatar: string;
   createdAt: Date;
 }
 
@@ -56,7 +57,7 @@ export const findByEmail = async (email: string) => {
 
 export const findById = async (id: string) => {
   const collection = await connectDatabase();
-  return collection.findOne({ _id: id });
+  return collection.findOne({ _id: new ObjectId(id) });
 };
 
 export const updateOne = async (id: string, data: any) => {
