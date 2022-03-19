@@ -4,6 +4,7 @@ specifiers:
   '@types/bcrypt': ^5.0.0
   '@types/cors': ^2.8.12
   '@types/express': ^4.17.13
+  '@types/express-fileupload': ^1.2.2
   '@types/jsonwebtoken': ^8.5.8
   '@types/node': ^17.0.21
   '@types/redis': ^4.0.11
@@ -12,6 +13,7 @@ specifiers:
   cors: ^2.8.5
   dotenv: ^16.0.0
   express: ^4.17.3
+  express-fileupload: ^1.3.1
   helmet: ^5.0.2
   joi: ^17.6.0
   jsonwebtoken: ^8.5.1
@@ -26,6 +28,7 @@ dependencies:
   cors: 2.8.5
   dotenv: 16.0.0
   express: 4.17.3
+  express-fileupload: 1.3.1
   helmet: 5.0.2
   joi: 17.6.0
   jsonwebtoken: 8.5.1
@@ -37,6 +40,7 @@ devDependencies:
   '@types/bcrypt': 5.0.0
   '@types/cors': 2.8.12
   '@types/express': 4.17.13
+  '@types/express-fileupload': 1.2.2
   '@types/jsonwebtoken': 8.5.8
   '@types/node': 17.0.21
   '@types/redis': 4.0.11
@@ -173,6 +177,12 @@ packages:
       '@types/node': 17.0.21
     dev: true
 
+  /@types/busboy/0.3.2:
+    resolution: {integrity: sha512-iEvdm9Z9KdSs/ozuh1Z7ZsXrOl8F4M/CLMXPZHr3QuJ4d6Bjn+HBMC5EMKpwpAo8oi8iK9GZfFoHaIMrrZgwVw==}
+    dependencies:
+      '@types/node': 17.0.21
+    dev: true
+
   /@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
@@ -181,6 +191,13 @@ packages:
 
   /@types/cors/2.8.12:
     resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
+    dev: true
+
+  /@types/express-fileupload/1.2.2:
+    resolution: {integrity: sha512-sWU1EVFfLsdAginKVrkwTRbRPnbn7dawxEFEBgaRDcpNFCUuksZtASaAKEhqwEIg6fSdeTyI6dIUGl3thhrypg==}
+    dependencies:
+      '@types/busboy': 0.3.2
+      '@types/express': 4.17.13
     dev: true
 
   /@types/express-serve-static-core/4.17.28:
@@ -368,6 +385,13 @@ packages:
       ieee754: 1.2.1
     dev: false
 
+  /busboy/0.3.1:
+    resolution: {integrity: sha512-y7tTxhGKXcyBxRKAni+awqx8uqaJKrSFSNFSeRG5CsWNdmy2BIK+6VGWEW7TZnIO/533mtMEA4rOevQV815YJw==}
+    engines: {node: '>=4.5.0'}
+    dependencies:
+      dicer: 0.3.0
+    dev: false
+
   /bytes/3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
@@ -470,6 +494,13 @@ packages:
     hasBin: true
     dev: false
 
+  /dicer/0.3.0:
+    resolution: {integrity: sha512-MdceRRWqltEG2dZqO769g27N/3PXfcKl04VhYnBlo2YhH7zPi88VebsjTKclaOyiuMaGU72hTfw3VkUitGcVCA==}
+    engines: {node: '>=4.5.0'}
+    dependencies:
+      streamsearch: 0.1.2
+    dev: false
+
   /diff/4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
@@ -506,6 +537,13 @@ packages:
   /etag/1.8.1:
     resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /express-fileupload/1.3.1:
+    resolution: {integrity: sha512-LD1yabD3exmWIFujKGDnT1rmxSomaqQSlUvzIsrA1ZgwCJ6ci7lg2YHFGM3Q6DfK+Yk0gAVU7GWLE7qDMwZLkw==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      busboy: 0.3.1
     dev: false
 
   /express/4.17.3:
@@ -1094,6 +1132,11 @@ packages:
   /statuses/1.5.0:
     resolution: {integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /streamsearch/0.1.2:
+    resolution: {integrity: sha1-gIudDlb8Jz2Am6VzOOkpkZoanxo=}
+    engines: {node: '>=0.8.0'}
     dev: false
 
   /string-width/4.2.3:

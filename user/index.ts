@@ -2,11 +2,13 @@ import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import upload from "express-fileupload";
 import routes from "./src/routes";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(upload());
 app.use(helmet());
 app.use(cors({
     origin: process.env.CORS_ORIGIN,

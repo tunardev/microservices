@@ -4,6 +4,8 @@ import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { Request } from "./types";
+import { UploadedFile } from "express-fileupload";
+import path from "path";
 
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -145,5 +147,22 @@ export const accountEditUsername = async (req: Request, res: Response) => {
 };
 
 export const accountEditAvatar = async (req: Request, res: Response) => {
-  return false;
+  const file = req.files?.avatar as UploadedFile;
+
+  const extansion = path.extname(file.name);
+  const fileName = `${uuidv4()}${extansion}`;
+
+  const folderPath = path.join(__dirname, "..", "..", "cdn", "images", req.user._id, fileName);
+
+  file.mv(folderPath, async (err: Error) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+
+    database.updateOne(req.user._id, { avatar: fileName });
+
+    return res
+      .status(200)
+      .json({ data: { ...req.body, avatar: fileName }, code: 200 });
+  });
 }
