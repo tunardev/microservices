@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 import * as database from "./database";
-import { Request, Response } from "express";
+import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
+import { Request } from "./types";
 
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -52,40 +53,10 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const me = async (req: Request, res: Response) => {
-  const token = req.headers.authorization as string;
-  if (!token) {
-    return res.status(401).json({
-      message: "No token provided.",
-    });
-  }
-
-  const bearer = token.split(" ");
-  if (!bearer || bearer.length !== 2) {
-    return res.status(401).json({
-      message: "Invalid token.",
-    });
-  }
-
-  try {
-    const payload = jwt.verify(bearer[1], process.env.JWT_SECRET as string) as {
-      id: string;
-    };
-
-    const user = await database.findById(payload.id);
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found.",
-      });
-    }
-
-    return res.status(200).json({
-      user,
-    });
-  } catch {
-    return res.status(401).json({
-      message: "Invalid token.",
-    });
-  }
+  delete req.user.password;
+  return res.status(200).json({
+    user: req.user,
+  });
 };
 
 export const forgotPassword = async (req: Request, res: Response) => {
@@ -136,3 +107,43 @@ export const changePassword = async (req: Request, res: Response) => {
     message: "Password changed.",
   });
 };
+
+export const accountEditEmail = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await database.findByEmail(email);
+  if (user) {
+    return res.status(400).json({ message: "Email already in use." });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, req.user.password);
+  if (!isPasswordValid) {
+    return res.status(400).json({ message: "Invalid password." });
+  }
+
+  await database.updateOne(req.user._id, { email });
+
+  return res.status(200).json({ message: "Email changed." });
+};
+
+export const accountEditUsername = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  const user = await database.findByEmail(username);
+  if (user) {
+    return res.status(400).json({ message: "Username already in use." });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, req.user.password);
+  if (!isPasswordValid) {
+    return res.status(400).json({ message: "Invalid password." });
+  }
+
+  await database.updateOne(req.user._id, { username });
+
+  return res.status(200).json({ message: "Username changed." });
+};
+
+export const accountEditAvatar = async (req: Request, res: Response) => {
+  return false;
+}

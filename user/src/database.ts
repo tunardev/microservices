@@ -59,7 +59,7 @@ export const findById = async (id: string) => {
   return collection.findOne({ _id: id });
 };
 
-export const updateOne = async (id: string, data: { password: string }) => {
+export const updateOne = async (id: string, data: any) => {
   const collection = await connectDatabase();
   collection.updateOne({ _id: id }, data);
 };
