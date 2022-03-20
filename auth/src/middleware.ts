@@ -2,7 +2,7 @@ import { Response, NextFunction } from "express";
 import { Request } from "./types";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
-import * as database from "./database";
+import User from "./database";
 
 export const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization as string;
@@ -26,7 +26,7 @@ export const isAuth = async (req: Request, res: Response, next: NextFunction) =>
         });
       }
 
-      const user = await database.findById(data.id);
+      const user = await User.findById(data.id);
       if (!user) {
         return res.status(404).json({
           message: "User not found.",
