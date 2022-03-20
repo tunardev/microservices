@@ -17,7 +17,6 @@ export const register = async (req: Request, res: Response) => {
     username,
     email,
     password: hashedPassword,
-    avatar: "hello.png",
     createdAt: new Date(),
   });
 
@@ -174,4 +173,20 @@ export const accountEditAvatar = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: "Avatar uploaded.", file: fileName });
   });
+};
+
+export const findUser = async (req: Request, res: Response) => {
+  const { username } = req.params;
+
+  const data = await database.findByUsername(username);
+  if (!data) {
+    return res.status(404).json({ message: "User not found." });
+  }
+
+  delete data.password;
+  return res.status(200).json({ user: data });
+};
+
+export const search = (req: Request, res: Response) => {
+  return false;
 };

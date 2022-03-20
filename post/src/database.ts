@@ -2,6 +2,8 @@ import { MongoClient, Document, ObjectId } from "mongodb";
 
 export interface Post extends Document {
   avatar: string;
+  content?: string;
+  userId: string;
   createdAt: Date;
 }
 

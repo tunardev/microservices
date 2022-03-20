@@ -26,7 +26,6 @@ export const isAuth = async (req: Request, res: Response, next: NextFunction) =>
         });
       }
 
-
       const user = await database.findById(data.id);
       if (!user) {
         return res.status(404).json({
