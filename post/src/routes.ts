@@ -1,8 +1,10 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import { createPost, post, posts } from "./controllers";
+import { isAuth } from "./middleware";
 const router = Router();
 
-router.get("/", (req: Request, res: Response) => {
-  return res.send("Hello World");
-});
+router.get("/posts", posts);
+router.get("/posts/:id", post);
+router.post("/posts", isAuth, createPost);
 
 export default router;

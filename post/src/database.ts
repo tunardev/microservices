@@ -1,4 +1,4 @@
-import { MongoClient, Document } from "mongodb";
+import { MongoClient, Document, ObjectId } from "mongodb";
 
 export interface Post extends Document {
   avatar: string;
@@ -19,8 +19,17 @@ export const connectDatabase = async () => {
   return collection;
 };
 
+export const find = async (data?: any) => {
+  const collection = await connectDatabase();
+  return collection.find(data || {});
+};
+
+export const findById = async (id: string) => {
+  const collection = await connectDatabase();
+  return collection.findOne({ _id: new ObjectId(id) });
+};
+
 export const create = async (data: Post) => {
   const collection = await connectDatabase();
   return collection.insertOne(data);
 };
-
